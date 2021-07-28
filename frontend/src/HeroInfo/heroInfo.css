@@ -1,0 +1,41 @@
+.life-tracker-word{
+    position: absolute;
+width: 175px;
+height: 40px;
+
+font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 34px;
+line-height: 40px;
+padding: 40px;
+color: #4154AF;
+}
+
+.life-tracker-desc{
+    width: 248px;
+    height: 60px;
+    
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;
+    
+    color: #4154AF;
+    padding-top: 100px;
+    padding-left: 30px;
+}
+
+
+/* .heroimg{
+    display:flex;
+    justify-content: center;
+} */
+
+.heroimg img{
+    width: 500px;
+    height: 500px;
+    padding-left: 480px; 
+   
+}
