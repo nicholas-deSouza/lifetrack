@@ -9,10 +9,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Card from '@material-ui/core/Card';
 import './sleepInfo.css'
+import SimpleCard from "../Card/card";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -23,11 +26,13 @@ const useStyles = makeStyles((theme) => ({
   backgroundColor: "#292B3E"
 }));
 
+
 export default function SleepBar() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
+        
       <AppBar position="static">
           <ButtonAppBar/>
         <Toolbar style={{ background: '#2E3B55' }}>
@@ -41,20 +46,10 @@ export default function SleepBar() {
           <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
+      <div className="add-sleep">
+        <Button style={{ background: '#FFF' }}>Add Sleep</Button>
+      </div>
+    <SimpleCard/>
     </div>
   );
 }
-
-
-// export default function SleepScreen(){
-//     return(
-//         <div>
-//             <ButtonAppBar/>
-//             <div className="sleep-bar">
-//                 hi
-//             </div>
-
-
-//         </div>
-//     )
-// }
