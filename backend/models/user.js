@@ -1,7 +1,7 @@
 // const bcrypt = require("bcrypt")
-// const db = require("../db")
+const db = require("../db")
 // const { BCRYPT_WORK_FACTOR }= require("../config")
-const { BadRequestError, UnauthorizedError } = require("../utils/error");
+const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 
 class User {

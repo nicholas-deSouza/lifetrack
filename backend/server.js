@@ -3,7 +3,7 @@ const cors = require("cors")
 const morgan = require("morgan")
 const {BadRequestError, NotFoundError} = require("./utils/errors")
 const { PORT } = require("./config")
-// const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth")
 // const router = require("./routes/auth")
 // const security = require("./middleware/security")
 
@@ -18,7 +18,7 @@ app.use(morgan("tiny"))
 
 // app.use(security.extractUserFromJwt)
 
-// app.use("/auth", authRoutes)
+app.use("/auth", authRoutes)
 
 app.use((req,res,next) => {
     return next (new NotFoundError())
