@@ -6,16 +6,16 @@ const { BadRequestError, UnauthorizedError } = require("../utils/errors");
 
 class User {
 
-    // static async makePublicUser(user){
-    //     return{
-    //         id: user.id,
-    //         email: user.email,
-    //         username: user.username,
-    //         firstName: user.first_name,
-    //         lastName: user.last_name,
-    //         createdAt: user.date
-    //     }
-    // }
+    static async makePublicUser(user){
+        return{
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            firstName: user.first_name,
+            lastName: user.last_name,
+            createdAt: user.date
+        }
+    }
 
     static async login(credentials) {
         // user should submit their email and password
@@ -91,8 +91,8 @@ class User {
 
         const user = results.rows[0]
 
-        // return User.makePublicUser(user)
-        return user
+        return User.makePublicUser(user)
+        
     }
 
     static async fetchUserByEmail(email){
