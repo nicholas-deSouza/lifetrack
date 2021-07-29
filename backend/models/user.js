@@ -66,7 +66,7 @@ class User {
         // 
         // take the user password, and hash it
 
-        const hashedPassword = await bcrypt.hash(credentials.password, BCRYPT_WORK_FACTOR)
+        // const hashedPassword = await bcrypt.hash(credentials.password, BCRYPT_WORK_FACTOR)
 
         // take the users email, and lowercase it
 
@@ -86,28 +86,29 @@ class User {
             VALUES ($1, $2, $3, $4, $5)    
             RETURNING id, email, username, first_name, last_name, date
         `,                  //hashed password 
-        [lowercasedEmail, hashedPassword, credentials.username, credentials.first_name, credentials.last_name])
+        [lowercasedEmail, credentials.password, credentials.username, credentials.first_name, credentials.last_name])
         //return the user
 
         const user = results.rows[0]
 
-        return User.makePublicUser(user)
+        // return User.makePublicUser(user)
+        return user
     }
 
-    // static async fetchUserByEmail(email){
-    //     if (!email){
-    //         throw new BadRequestError("No email provided")
-    //     }
+    static async fetchUserByEmail(email){
+        if (!email){
+            throw new BadRequestError("No email provided")
+        }
 
-    //     const query = `SELECT * FROM users WHERE email = $1` //query parameter 
+        const query = `SELECT * FROM users WHERE email = $1` //query parameter 
 
-    //     const result = await db.query(query, [email.toLowerCase()])
+        const result = await db.query(query, [email.toLowerCase()])
 
-    //     const user = result.rows[0]
+        const user = result.rows[0]
         
-    //     return user
+        return user
 
-    // }
+    }
 }
 
 
