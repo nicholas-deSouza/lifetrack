@@ -182,7 +182,6 @@ export default function Registration({ user, setUser }) {
 
   return (
     <StylesProvider injectFirst>
-       <ButtonAppBar/>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">

@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import apiClient from "./Services/apiClient";
 import Activity from "./Activities/activity";
 import ActivityPage from "./ActivityPage/activityPage";
+import Info from "./HeroInfo/heroInfo";
+
 
 function App() {
 
@@ -19,21 +21,23 @@ function App() {
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
 
-  // useEffect(() => {
-  //   // once the app runs fetch exercises
-  //   const fetchExercises = async () => {
-  //     setIsFetching(true);
-  //     const { data, error } = await apiClient.listExercises();
-  //     console.log({ data });
-  //     if (data) setExercises(data.exercises);
-  //     if (error) setError(error);
+  useEffect(() => {
+    // once the app runs fetch exercises
+    const fetchExercises = async () => {
+      setIsFetching(true);
+      const { data, error } = await apiClient.listExercises();
+      console.log({ data });
+      if (data) setExercises(data.exercises);
+      if (error) setError(error);
 
-  //     setIsFetching(false);
-  //   };
+      setIsFetching(false);
+    };
 
-  //   fetchExercises();
-  // }, []);
+    fetchExercises();
+  }, []);
 
+  
+    console.log(user, "user")
 
   const addExercise = (newExercise) => {
     setExercises((oldExercises) => [newExercise, ...oldExercises]);
@@ -45,34 +49,26 @@ function App() {
       if (data) setUser(data.user);
       if (error) setError(error);
     };
+
     const token = localStorage.getItem("life_tracker_token");
     if (token) {
       apiClient.setToken(token);
       fetchUser();
     }
   }, []);
+
   return (
     <div className="App">
-        {/* <Login/> */}
-
-
+      
         <BrowserRouter>
+        <ButtonAppBar setUser={setUser} user={user} setAppState={setAppState}/>
           <Routes>
-            {/* <Route
-              path="/register"
-              element={<Registration user={user} setUser={setUser} />}
-            /> */}
-            
-            {/* <Route exact path="/" element={<HomePage /> } setUser={setUser} user={user} /> */}
-
+        
             <Route
             path="/"
-            element={<HomePage setUser={setUser} user={user} />}
+            element={<Info setUser={setUser} user={user} />}
           />
             
-            {/* <Route exact path="/login" element={<Login/>}  setUser={setUser} user={user} /> */}
-            {/* <Route exact path="/register" element={<Registration/>}  setUser={setUser} user={user} /> */}
-
             <Route
             path="/login"
             element={<Login setUser={setUser} user={user} />}
@@ -84,27 +80,20 @@ function App() {
           />
 
             <Route
-            path="/register"
-            element={<Registration setUser={setUser} user={user} />}
-          />
-
-            {/* <Route exact path="/sleep" element={<SleepScreen/>} />
-
-            <Route exact path="/activity" element={<Activity/>}  setUser={setUser} user={user} /> */}
-
-            <Route
             path="/activity"
             element={<Activity setUser={setUser} user={user} />}
           />
 
-            <Route exact path="/exercise" element={<ExerciseBar/>}    
-                user={user}
-                error={error}
-                exercises={exercises}
-                setExercises={setExercises}
-                setIsFetching={setIsFetching}
-                setError={setError}
-                addExercise={addExercise}/>
+            <Route exact path="/exercise" element={<ExerciseBar 
+             user={user}
+             error={error}
+             exercises={exercises}
+             setExercises={setExercises}
+             setIsFetching={setIsFetching}
+             setError={setError}
+             addExercise={addExercise}/>
+            }    
+              />
            {/* <Calendar/> */}
           </Routes>
         </BrowserRouter>

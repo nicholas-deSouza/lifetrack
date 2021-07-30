@@ -1,3 +1,5 @@
+
+
 export default function Activity({user}){
 
     const isAuthenticated = Boolean(user?.email);

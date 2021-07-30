@@ -9,8 +9,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Card from '@material-ui/core/Card';
 import './exerciseInfo.css'
-import SimpleCard from "../Card/card";
 import apiClient from "../Services/apiClient";
+import SimpleCard from "../Card/card";
+import Grid from "@material-ui/core/Grid";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,9 +29,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function ExerciseBar() {
+export default function ExerciseBar({user, addExercise}) {
   const classes = useStyles();
-
   const [exercises, setExercises] = useState([]);
   const [error, setError] = useState(null);
   const [isFetching, setIsFetching] = useState(false);
@@ -48,26 +48,50 @@ export default function ExerciseBar() {
     fetchExercises();
   }, []);
 
+
+
+  if (user?.email){
   return (
+  
     <div className={classes.root}>
-        
-      <AppBar position="static">
-          <ButtonAppBar/>
-        <Toolbar style={{ background: '#2E3B55' }}>
+
+      <div className="title">
+      <Toolbar style={{ background: '#2E3B55' }}>
             <h1>Exercise</h1>
-          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button> */}
         </Toolbar>
-      </AppBar>
-      <div className="add-exercise">
-        <Button style={{ background: '#FFF' }}>Add Exercise</Button>
       </div>
+      
+      <div className="content">
+          <div className="add-exercise">
+            <Button style={{ background: '#FFF' }}>Add Exercise</Button>
+          </div>
+      </div>
+
+      <Grid container spacing = {3}>
+        {exercises?.map((exercise) => (
+            <Grid item key={exercise.id} xs={12} md={6} lg={4}>
+              <Card exercise={exercise} />
+            </Grid>
+          ))}
+        </Grid>
+
+        <div className="exercise-form">
+
+            
+
+
+        </div>
+        
+
+
+
+      <AppBar position="static">
+      </AppBar>
     <SimpleCard/>
     </div>
   );
+        }else{
+            return <h1> log in please</h1>
+  }
 }
+

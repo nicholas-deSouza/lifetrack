@@ -27,13 +27,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function SimpleCard({ exercise }) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
     <Card className={classes.root}>
-      <CardContent style={{ marginTop: '12px' }}>
+      {/* <CardContent style={{ marginTop: '12px' }}>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           Word of the Day
         </Typography>
@@ -45,10 +45,21 @@ export default function SimpleCard() {
         </Typography>
         <Typography variant="body2" component="p">
         </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+      </CardContent> */}
+      <h1>
+
+          {/* title={exercise.name}
+          subheader={(exercise.timestamp, exercise.name, exercise.name)} */}
+
+      </h1>
+
+      <Typography variant ="h3" color="textSecondary">
+
+        {/* Information: Duration: {exercise.duration} and Intensity:{" "}{exercise.intensity} */}
+
+      </Typography>
+
+
     </Card>
   );
 }

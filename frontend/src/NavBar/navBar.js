@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link, useNavigate } from 'react-router-dom';
+import apiClient from '../Services/apiClient';
 import './navBar.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export default function ButtonAppBar({ user, setUser, setAppState }) {
+export default function ButtonAppBar({ user, setUser }) {
   const classes = useStyles();
 
   const navigate = useNavigate();
@@ -31,10 +31,13 @@ export default function ButtonAppBar({ user, setUser, setAppState }) {
   const isAuthenticated = Boolean(user?.email);
 
   const handleOnLogout = () => {
-    setAppState({});
+    // setAppState({});
     setUser({});
     navigate("/");
+    apiClient.setToken()
   };
+
+  // console.log({user})
 
   const button = isAuthenticated ? (
     <button className="btn primary" onClick={handleOnLogout}>
@@ -78,7 +81,7 @@ export default function ButtonAppBar({ user, setUser, setAppState }) {
             <Button color="inherit">Nutrition</Button>
           </Link>
 
-          <Link to="/sleep" style={{ color: '#FFF' }}>
+          <Link to="/" style={{ color: '#FFF' }}>
             <Button color="inherit">Sleep</Button>
           </Link>
           </div>

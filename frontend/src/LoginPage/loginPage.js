@@ -149,7 +149,6 @@ export default function Login({user, setUser}) {
   return (
     
     <StylesProvider injectFirst>
-       <ButtonAppBar/>
       <Container component="main" maxWidth="xs">
         
         <div className={classes.paper}>
