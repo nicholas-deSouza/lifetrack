@@ -15,8 +15,11 @@ class Exercise {
     const results = await db.query(
       `
         INSERT INTO exercises (name, category, duration, intensity, user_id)
+
         VALUES ($1, $2, $3, $4, (SELECT id FROM users WHERE email = $5))
-        RETURNING id,
+
+        RETURNING 
+                id,
                 name, 
                 category, 
                 duration, 
@@ -38,13 +41,15 @@ class Exercise {
     //looks up an exercise 
     const results = await db.query(
       `
-        SELECT e.id,
+        SELECT 
+                e.id,
                 e.name, 
                 e.category, 
                 e.duration, 
                 e.intensity, 
                 e.user_id AS "userId",
                 u.email AS "userEmail"
+
         FROM exercises AS e
             JOIN users AS u ON u.id = e.user_id
         WHERE e.id = $1 AND u.email = $2
@@ -61,7 +66,8 @@ class Exercise {
     // show all existing exercise logged in desc order of when they were created
     const results = await db.query(
       `
-        SELECT e.id,
+        SELECT 
+                e.id,
                 e.name, 
                 e.category, 
                 e.duration, 
@@ -69,6 +75,7 @@ class Exercise {
                 e.user_id AS "userId",
                 e.timestamp, 
                 u.email AS "userEmail"
+                
         FROM exercises AS e
             JOIN users AS u ON u.id = e.user_id
             WHERE u.email = $1

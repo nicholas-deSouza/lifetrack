@@ -5,6 +5,8 @@ const {BadRequestError, NotFoundError} = require("./utils/errors")
 const { PORT } = require("./config")
 const authRoutes = require("./routes/auth")
 const security = require("./middleware/security")
+const exerciseRoute = require("./routes/exercise");
+const sleepRoute = require("./routes/sleep");
 
 
 const app = express()
@@ -18,6 +20,8 @@ app.use(morgan("tiny"))
 app.use(security.extractUserFromJwt)
 
 app.use("/auth", authRoutes)
+
+app.use("/exercise", exerciseRoute);
 
 app.use((req,res,next) => {
     return next (new NotFoundError())
