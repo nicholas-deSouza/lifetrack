@@ -8,12 +8,15 @@ CREATE TABLE users (
     date        TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE sleep (
-  id            SERIAL PRIMARY KEY,
-  start_time    TIMESTAMP NOT NULL,
-  end_time      TIMESTAMP NOT NULL,
-  user_id       INTEGER REFERENCES users(id) ON DELETE CASCADE,  
-  timestamp     TIMESTAMP DEFAULT NOW()
+CREATE TABLE exercises (
+  id        SERIAL PRIMARY KEY,
+  name        TEXT NOT NULL,
+  category    TEXT,
+  duration    INTEGER,
+  intensity   INTEGER,
+  user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE, 
+  timestamp  TIMESTAMP DEFAULT NOW()
 );
+
 
 -- add foreign key above?

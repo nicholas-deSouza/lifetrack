@@ -5,7 +5,7 @@ const {BadRequestError, NotFoundError} = require("./utils/errors")
 const { PORT } = require("./config")
 const authRoutes = require("./routes/auth")
 // const router = require("./routes/auth")
-// const security = require("./middleware/security")
+const security = require("./middleware/security")
 
 
 const app = express()
@@ -16,7 +16,7 @@ app.use(express.json())
 
 app.use(morgan("tiny"))
 
-// app.use(security.extractUserFromJwt)
+app.use(security.extractUserFromJwt)
 
 app.use("/auth", authRoutes)
 
