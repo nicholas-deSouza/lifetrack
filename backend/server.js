@@ -4,7 +4,6 @@ const morgan = require("morgan")
 const {BadRequestError, NotFoundError} = require("./utils/errors")
 const { PORT } = require("./config")
 const authRoutes = require("./routes/auth")
-// const router = require("./routes/auth")
 const security = require("./middleware/security")
 
 
@@ -40,4 +39,3 @@ app.listen(PORT, () => {
     console.log(`😎 Server running on PORT ${PORT}`)
 })
 
-// module.exports = router
