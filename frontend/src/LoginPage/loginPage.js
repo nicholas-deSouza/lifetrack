@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 // import clsx from 'clsx';
@@ -10,7 +10,10 @@ import { makeStyles, alpha, StylesProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "./loginPage.css";
 import ButtonAppBar from "../NavBar/navBar";
+import apiClient from "../Services/apiClient";
+import { useNavigate } from "react-router-dom";
 // import { withStyles } from '@material-ui/core/styles';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -92,8 +95,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function Login({user, setUser}) {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    // if user is already logged in,
+    // redirect them to the activity page
+    if (user?.email) {
+      navigate("/activity");
+    }
+  }, [user, navigate]);
+
+
+  const handleOnInputChange = (event) => {
+    if (event.target.name === "email") {
+      if (event.target.value.indexOf("@") === -1) {
+        setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
+      } else {
+        setErrors((e) => ({ ...e, email: null }));
+      }
+    }
+
+    setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
+  };
+
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors((e) => ({ ...e, form: null }));
+
+    const { data, error } = await apiClient.loginUser({
+      email: form.email,
+      password: form.password,
+    });
+    if (error) setErrors((e) => ({ ...e, form: error }));
+    if (data?.user) {
+      setUser(data.user);
+      apiClient.setToken(data.token);
+    }
+
+    setIsLoading(false);
+  };
+
 
   return (
     
@@ -121,6 +172,7 @@ export default function Login() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleOnInputChange}
                 />
               </Grid>
 
@@ -136,6 +188,7 @@ export default function Login() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={handleOnInputChange}
                 />
               </Grid>
 
@@ -153,13 +206,15 @@ export default function Login() {
               {/* LOG IN BUTTON */}
            </Grid>
             <Button
+              disabled={isLoading}
               type="submit"
               width="50px"
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleOnSubmit}
             >
-              LOG IN
+              {isLoading ? "Loading.." : "Login"}
             </Button>
 
             {/* REGISTER LINK */}
@@ -167,7 +222,7 @@ export default function Login() {
             <Grid container>
               <Grid item>
                 <Link href="#" variant="body2" className={classes.link}>
-                  Don't have an account? Register
+                  Don't have an account? <Link to="/register"> Register </Link>
                 </Link>
               </Grid>
             </Grid>

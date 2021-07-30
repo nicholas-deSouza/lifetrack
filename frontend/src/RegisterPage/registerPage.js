@@ -14,6 +14,8 @@ import { useState, useEffect } from "react";
 // import { useNavigate } from "react-router-dom";
 // import apiClient from "../../services/apiClient";
 import ButtonAppBar from "../NavBar/navBar";
+import apiClient from "../Services/apiClient";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -105,25 +107,41 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Registration({ user, setUser }) {
   const classes = useStyles();
-//   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
-    first_name: "",
-    last_name: "",
     email: "",
     password: "",
   });
 
-//   useEffect(() => {
-//     // if user is already logged in,
-//     // redirect them to the home page
-//     if (user?.email) {
-//       navigate("/");
-//     }
-//   }, [user, navigate]);
+  useEffect(() => {
+    if (user?.email) {
+      navigate("/activity");
+    }
+  }, [user, navigate]);
 
   const handleOnInputChange = (event) => {
-    // checking for valid email
+    if (event.target.name === "password") {
+      if (form.passwordConfirm && form.passwordConfirm !== event.target.value) {
+        setErrors((e) => ({
+          ...e,
+          passwordConfirm: "Password's do not match",
+        }));
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }));
+      }
+    }
+    if (event.target.name === "passwordConfirm") {
+      if (form.password && form.password !== event.target.value) {
+        setErrors((e) => ({
+          ...e,
+          passwordConfirm: "Password's do not match",
+        }));
+      } else {
+        setErrors((e) => ({ ...e, passwordConfirm: null }));
+      }
+    }
     if (event.target.name === "email") {
       if (event.target.value.indexOf("@") === -1) {
         setErrors((e) => ({ ...e, email: "Please enter a valid email." }));
@@ -131,25 +149,37 @@ export default function Registration({ user, setUser }) {
         setErrors((e) => ({ ...e, email: null }));
       }
     }
+
     setForm((f) => ({ ...f, [event.target.name]: event.target.value }));
   };
 
-//   const handleOnSubmit = async (e) => {
-//     e.preventDefault();
-//     setErrors((e) => ({ ...e, form: null }));
-//     // make api call to register user
-//     const { data, error } = await apiClient.signupUser({
-//       first_name: form.first_name,
-//       last_name: form.last_name,
-//       email: form.email,
-//       password: form.password,
-//     });
-//     if (error) setErrors((e) => ({ ...e, form: error }));
-//     if (data?.user) {
-//       setUser(data.user);
-//       apiClient.setToken(data.token);
-//     }
-//   };
+
+  const handleOnSubmit = async () => {
+    setIsLoading(true);
+    setErrors((e) => ({ ...e, form: null }));
+
+    if (form.passwordConfirm !== form.password) {
+      setErrors((e) => ({ ...e, passwordConfirm: "Passwords do not match." }));
+      setIsLoading(false);
+      return;
+    } else {
+      setErrors((e) => ({ ...e, passwordConfirm: null }));
+    }
+
+    const { data, error } = await apiClient.signupUser({
+      email: form.email,
+      password: form.password,
+    });
+    if (error) setErrors((e) => ({ ...e, form: error }));
+    
+    if (data?.user) {
+      setUser(data.user);
+      apiClient.setToken(data.token);
+    }
+
+    setIsLoading(false);
+  };
+
   return (
     <StylesProvider injectFirst>
        <ButtonAppBar/>
@@ -158,6 +188,7 @@ export default function Registration({ user, setUser }) {
           <Typography component="h1" variant="h5">
             Create Account
           </Typography>
+          {errors.form && <span className="error">{errors.form}</span>}
 
           {/* FIRST NAME */}
           <form className={classes.form} noValidate>
@@ -170,8 +201,8 @@ export default function Registration({ user, setUser }) {
                 <TextField
                   className={classes.fnameInput}
                   autoComplete="fname"
-                  name="first_name"
-                  value={form.first_name}
+                  name="firstName"
+                  value={form.firstName}
                   onChange={handleOnInputChange}
                   // variant="filled"
                   required
@@ -191,8 +222,8 @@ export default function Registration({ user, setUser }) {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="last_name"
-                  value={form.last_name}
+                  name="lastName"
+                  value={form.lastName}
                   onChange={handleOnInputChange}
                   autoComplete="lname"
                 />
@@ -207,10 +238,15 @@ export default function Registration({ user, setUser }) {
                   fullWidth
                   id="email"
                   label="Email Address"
-                  name="email"
-                  value={form.email}
-                  onChange={handleOnInputChange}
+                 
+                  
+                  
                   autoComplete="email"
+                  type="email"
+              name="email"
+              placeholder="Enter a valid email"
+              value={form.email}
+              onChange={handleOnInputChange}
                 />
               </Grid>
 
@@ -221,35 +257,61 @@ export default function Registration({ user, setUser }) {
                   // variant="filled"
                   required
                   fullWidth
-                  name="password"
-                  value={form.password}
-                  onChange={handleOnInputChange}
+                  
+                 
                   label="Password"
-                  type="password"
+                  
                   id="password"
                   autoComplete="current-password"
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  value={form.password}
+                  onChange={handleOnInputChange}
+                />
+              </Grid>
+
+              {/* CONFIRM PASSWORD */}
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.longInput}
+                  // variant="filled"
+                  required
+                  fullWidth
+                  
+                 
+                  label="Confirm Password"
+                  
+                  id="password"
+                  autoComplete="current-password"
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="confirm password"
+                  value={form.passwordConfirm}
+                  onChange={handleOnInputChange}
                 />
               </Grid>
 
               {/* REGISTER BUTTON */}
             </Grid>
             <Button
+              disabled={isLoading}
               type="submit"
               width="50px"
               variant="contained"
               color="primary"
-            //   onClick={handleOnSubmit}
+               onClick={handleOnSubmit}
               className={classes.submit}
             >
-              Register
+              {isLoading ? "Loading.." : "Register"}
             </Button>
 
             {/* LOGIN LINK */}
             <div className="loginLink"></div>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2" className={classes.link}>
-                  Already have an account? Log in
+                <Link to="/login" variant="body2" className={classes.link}>
+                  Already have an account? Log in here
                 </Link>
               </Grid>
             </Grid>

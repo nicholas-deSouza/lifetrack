@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './navBar.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -21,8 +21,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar() {
+
+
+export default function ButtonAppBar({ user, setUser, setAppState }) {
   const classes = useStyles();
+
+  const navigate = useNavigate();
+
+  const isAuthenticated = Boolean(user?.email);
+
+  const handleOnLogout = () => {
+    setAppState({});
+    setUser({});
+    navigate("/");
+  };
+
+  const button = isAuthenticated ? (
+    <button className="btn primary" onClick={handleOnLogout}>
+      Logout
+    </button>
+  ) : (
+    <Link to="/login">
+      <button className="btn primary">Login</button>
+    </Link>
+  );
+
+
 
   return (
     <div className={classes.root}>
@@ -46,7 +70,7 @@ export default function ButtonAppBar() {
             <Button color="inherit">Activity</Button>
           </Link>
 
-          <Link to="/" style={{ color: '#FFF' }}>
+          <Link to="/exercise" style={{ color: '#FFF' }}>
             <Button color="inherit">Exercise</Button>
           </Link>
 
@@ -59,6 +83,12 @@ export default function ButtonAppBar() {
           </Link>
           </div>
           
+          {user?.email ? (
+            <li>
+              <Button color="inherit" onClick={handleOnLogout}> Logout </Button>
+            </li>
+          ) : (
+            <li>
           <Link to="/login" style={{ color: '#FFF' }}>
             <Button color="inherit">Login</Button>
           </Link>
@@ -67,6 +97,11 @@ export default function ButtonAppBar() {
             <Button color="inherit">Register</Button>
           </Link>
           
+            </li>
+            
+          )}
+
+         
         </Toolbar>
       </AppBar>
     </div>
