@@ -20,7 +20,7 @@ Submitted by: **Nicholas de Souza**
 - [ ] Deployed website with Heroku & Surge. 
 
 **Detailed Activity Page:**
-- [] The detailed activity page should display a feed of all previous tracked activities.
+- [ ] The detailed activity page should display a feed of all previous tracked activities.
 - [x] The detailed activity should contain a form to contain relevant information. (i.e if tracking nutrition this form allows the user to capture calories, timestamp, image, category, etc.) 
 - [x] The activity tracked should be given a unique id for easy lookup.
   `TODO://` Add link to table schema in the link code below. Your file should end in `.sql` and show your schema for the detailed activities table. (🚫 Remove this paragraph after adding schema link)
@@ -46,7 +46,7 @@ I felt that the amount of topics that needed to be used at the same time got a l
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-If I had more time, I would've completed the login and register forms along with implementing the activities.
+If I had more time, I would've fixed the CSS and worked more on the Activity Page.
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
@@ -60,4 +60,4 @@ I tried using Figma to make the CSS portion of the assignment easier but that di
 
 Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
 
-My podmates were very helpful this week and so was Jungah when she helped debug a problem I had earlier in the week along with Matt.
+My podmates helped a lot and so did Matt.
