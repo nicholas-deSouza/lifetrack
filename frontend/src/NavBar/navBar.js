@@ -69,7 +69,7 @@ export default function ButtonAppBar({ user, setUser }) {
           </Typography>
 
           <div className="activities">
-          <Link to="/" style={{ color: '#FFF' }}>
+          <Link to="/activity" style={{ color: '#FFF' }}>
             <Button color="inherit">Activity</Button>
           </Link>
 

@@ -1,9 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -12,6 +9,7 @@ const useStyles = makeStyles({
     maxWidth: 500,
     marginLeft: 450,
     marginTop:25,
+    
   },
   bullet: {
     display: 'inline-block',
@@ -27,39 +25,35 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard({ exercise }) {
+export default function SimpleCard({ exercise }) {  
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  // const bull = <span className={classes.bullet}>•</span>;
+
+
+  console.log(exercise, "in card")
 
   return (
-    <Card className={classes.root}>
-      {/* <CardContent style={{ marginTop: '12px' }}>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+    <div>
+        <Card className={classes.root}>
+      
+        <Typography variant ="h7" color="textSecondary">
+          Title of Exercise: {exercise.name}
+          <br/>
+          Category of Exercise: {exercise.category}
+          <br/>
+          <br/>
+          Duration: {exercise.duration}(s) and Intensity: {exercise.intensity}/10
         </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-        </Typography>
-      </CardContent> */}
-      <h1>
+          
+        <br/>
 
-          {/* title={exercise.name}
-          subheader={(exercise.timestamp, exercise.name, exercise.name)} */}
+      {/* <Typography variant ="h6" color="textSecondary">
+        
+        Information: Duration: {exercise.duration} and Intensity:{" "}{exercise.intensity}
 
-      </h1>
-
-      <Typography variant ="h3" color="textSecondary">
-
-        {/* Information: Duration: {exercise.duration} and Intensity:{" "}{exercise.intensity} */}
-
-      </Typography>
-
-
+      </Typography> */}
     </Card>
+    </div>
+    
   );
 }

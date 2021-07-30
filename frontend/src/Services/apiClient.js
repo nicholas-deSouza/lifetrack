@@ -32,7 +32,7 @@ class ApiClient {
 
 
   async listExercises() {
-    return await this.request({ endpoint: `exercises`, method: `GET` });
+    return await this.request({ endpoint: `exercise`, method: `GET` });
   }
 
   async fetchUserFromToken() {
@@ -40,7 +40,7 @@ class ApiClient {
   }
   async createCard(exercise) {
     return await this.request({
-      endpoint: `exercises`,
+      endpoint: `exercise`,
       method: `POST`,
       data: exercise,
     });
