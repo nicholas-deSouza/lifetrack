@@ -34,8 +34,12 @@ Implement any of the following features to improve the application:
 - [ ] Create a page that shows all other users that use the life tracker application and allow users to follow each other.
 
 ### Walkthrough Video
-
+General Video
 https://www.loom.com/share/ee3e4a7885e04f3c8b7bc8ce39101959
+
+
+I added the link to my schema but I wasn't sure if I did it right so I recorded a video of it.
+https://www.loom.com/share/ab140dc507c144508ff95f35644a6301
 
 ### Reflection
 
